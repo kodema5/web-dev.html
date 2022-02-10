@@ -1,0 +1,1 @@
+import * as bootstrap from './bootstrap-5.1.3.bundle.js'
