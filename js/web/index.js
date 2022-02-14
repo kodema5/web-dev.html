@@ -10,6 +10,8 @@ const isString = (a) => (typeof a === 'string')
 
 const isBoolean = (a) => (typeof a === 'boolean')
 
+const isFunction = (a) => (typeof a === 'function')
+
 const isObject = (a) => (a !== null && typeof a ==='object')
 
 const cleanObject = (obj) => {
@@ -71,10 +73,10 @@ const parseJSON = (s, defaultValue) => {
 
 
 // ID
-var ElId = 0
+var _Id = 0
 
-const getElId = (t = 'el') => {
-    return t + '-' + (++ElId)
+const getId = (t = 'el') => {
+    return t + '-' + (++_Id)
 }
 
 // AJAX
@@ -340,8 +342,9 @@ window.Web = {
     ajax, ajaxFn,
     setStorage, getStorage, removeStorage, clearStorage, saveStorage, loadStorage,
     PubSub, publish, subscribe, unsubscribe, exec,
-    isEmpty, isString, isBoolean, isObject, cleanObject,
-    getElId,
+    isEmpty, isString, isBoolean, isObject, isFunction,
+    cleanObject, setObject, getObject, deleteObject,
+    getId,
 }
 
 // ex:
@@ -354,7 +357,8 @@ export {
     ajax, ajaxFn,
     setStorage, getStorage, removeStorage, clearStorage, saveStorage, loadStorage,
     PubSub, publish, subscribe, unsubscribe, exec,
-    isEmpty, isString, isBoolean, isObject, cleanObject,
-    getElId,
+    isEmpty, isString, isBoolean, isObject,  isFunction,
+    cleanObject, setObject, getObject, deleteObject,
+    getId,
 }
 

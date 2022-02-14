@@ -1,8 +1,8 @@
-import { html, render, getElId, useState, isEmpty, } from '../js/web.js'
+import { html, render, getId, useState, isEmpty, } from '../js/web.js'
 
 
 let DataList = ({
-    id = getElId('datalist'),
+    id = getId('datalist'),
     placeholder = 'Type to search...',
     options:opt = [],
     onInput = () => {},
@@ -49,7 +49,9 @@ return html`
 
 export let DataListCard = () => html`
     <div class="card">
-    <div class="card-header">datalist example</div>
+    <div class="card-header h6">
+        datalist is useful for finding valid entries
+    </div>
     <div class="card-body">
         <${DataList}
             onInput=${async (e, {setOptions}) => {
@@ -70,8 +72,8 @@ export let DataListCard = () => html`
             }}
         />
     </div>
-    <div class="card-footer"><small>
+    <div class="card-body h6">
         it is great for searching entries
-    </small></div>
+    </div>
     </div>
 `
