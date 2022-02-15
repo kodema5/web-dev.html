@@ -1,4 +1,4 @@
-import { html, useRef, render, isFunction} from '../js/web.js'
+import { html, useRef, render, isFunction} from '../web.js'
 
 export let Tooltip = ({
     title: title_,
@@ -13,30 +13,32 @@ export let Tooltip = ({
         ref=${spanEl}
 
         onMouseOver=${() => {
-            var t = bootstrap.Tooltip.getInstance(spanEl.current)
+            let el = spanEl.current
+
+            var t = bootstrap.Tooltip.getInstance(el)
             if (t) {
                 t.show()
                 return
             }
 
-            t = bootstrap.Tooltip.getOrCreateInstance(spanEl.current, Object.assign({
+            t = bootstrap.Tooltip.getOrCreateInstance(el, Object.assign({
                 html: true,
                 trigger: 'manual',
                 title: ' '
             }, tipCfg))
 
-            spanEl.current.addEventListener('show.bs.tooltip', () => {
+            el.addEventListener('show.bs.tooltip', () => {
                 if (!t.tip) return
 
                 let e = t.tip.getElementsByClassName('tooltip-inner')[0]
                 e.innerHTML = ' '
             })
 
-            spanEl.current.addEventListener('shown.bs.tooltip', () => {
+            el.addEventListener('shown.bs.tooltip', () => {
                 let e = t.tip.getElementsByClassName('tooltip-inner')[0]
                 if (!e) return
 
-                render(isFunction(title_) ? title_() : title_, e)
+                render(isFunction(title_) ? title_.call(el) : title_, e)
 
                 e.addEventListener('mouseover', () => {
                     e.dataset.hovered = 'true'

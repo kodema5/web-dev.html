@@ -1,4 +1,4 @@
-import { html, useRef,  getId, isFunction, useState, } from '../js/web.js'
+import { html, useRef,  getId, isFunction, useState, } from '../web.js'
 
 export let TextSearch = ({
     id = getId('textsearch'),
