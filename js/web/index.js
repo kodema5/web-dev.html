@@ -1,5 +1,6 @@
 import { h, render } from './preact.js'
 import { useState, useReducer, useMemo, useCallback, useRef, useContext, useEffect, useLayoutEffect, useErrorBoundary } from './preact.hooks.js'
+import { createContext } from './preact.js'
 import htm from "./htm.js"
 const html = htm.bind(h)
 
@@ -339,6 +340,7 @@ const exec = ps.exec.bind(ps)
 window.Web = {
     html, render,
     useState, useReducer, useMemo, useCallback, useRef, useContext, useEffect, useLayoutEffect, useErrorBoundary,
+    createContext,
     ajax, ajaxFn,
     setStorage, getStorage, removeStorage, clearStorage, saveStorage, loadStorage,
     PubSub, publish, subscribe, unsubscribe, exec,
@@ -354,6 +356,7 @@ window.Web = {
 export {
     html, render,
     useState, useReducer, useMemo, useCallback, useRef, useContext, useEffect, useLayoutEffect, useErrorBoundary,
+    createContext,
     ajax, ajaxFn,
     setStorage, getStorage, removeStorage, clearStorage, saveStorage, loadStorage,
     PubSub, publish, subscribe, unsubscribe, exec,
