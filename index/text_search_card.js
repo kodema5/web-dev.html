@@ -27,11 +27,9 @@ export let TextSearchCard = () => html`
                 <span class="visually-hidden">Loading...</span>
                 </div>
             </div>`
-            render(h, e.searchEl)
+            e.update(h)
             setTimeout(() => {
-                render(html`
-                    ${t}, now is ${a.toLocaleString()}
-                `, e.searchEl)
+                e.update(html`${t}, now is ${a.toLocaleString()}`)
             }, 2000)
         }}
 
@@ -42,7 +40,10 @@ export let TextSearchCard = () => html`
     <div class="card-body h6 small">
         it consists of a text-field and a "searchEl" div below it.
         it iterates "on"-functions and add to its event param:
-        searchEl (div), text/setText, value/setValue, reset, show/hide
+        searchEl, update (the searchEl div),
+        text/setText,
+        value/setValue,
+        reset, show/hide
     </div>
 </div>
 `

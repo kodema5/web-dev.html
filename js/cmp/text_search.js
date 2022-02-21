@@ -1,4 +1,4 @@
-import { html, useRef,  getId, isFunction, useState, } from '../web.js'
+import { html, useRef,  getId, isFunction, useState, render, } from '../web.js'
 
 export let TextSearch = ({
     id = getId('textsearch'),
@@ -19,6 +19,10 @@ export let TextSearch = ({
         attr[k] = (ev) => fn(Object.assign(ev, {
 
             searchEl: searchRef.current,
+            update: (a) => {
+                render(a, searchRef.current)
+            },
+
             value, setValue,
             text, setText,
 
