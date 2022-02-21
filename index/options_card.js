@@ -20,7 +20,7 @@ export let OptionsCard = () => {
 
             getOption=${(a) => a.a}
         />
-        <div id=${id}>select the above</div>
+        <div id=${id}>Select the above</div>
         </div>
         <div class="card-body h6 small">
             a simple/example of a multi-select component,

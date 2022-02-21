@@ -1,64 +1,63 @@
 // various components for index.html
 import { html, render, createContext, useState, useReducer, useContext} from '../js/web.js'
+import { FormCard } from './form_card.js'
 import { OptionsCard } from './options_card.js'
 import { TextSearchCard} from './text_search_card.js'
 import { TooltipCard } from './tooltip_card.js'
 
-let RESET = Symbol()
-let FormContext = createContext(null)
+// import { Form, FormContext, } from '../js/cmp.js'
 
-let Form = ({
-    values:initialValues = {},
-    init = (a) => a,
-    calc = (a) => a,
-    children,
-}) => {
-    let [values, update] = useReducer(
-        (state, values) => {
-            return values === RESET
-                ? init(initialValues)
-                : calc({...state, ...values}) 
-        }, 
-        initialValues,
-        init)
+// let Child = ({title, increment=1}) => {
+//     let {values, update, reset} = useContext(FormContext)
+//     return html`
+//     <div class="row">
+//         <div class="col">${title}</div>
 
-    return html`
-        <${FormContext.Provider} value=${{
-            values,
-            update,
-            reset: () => update(RESET)
-        }}>
-        ${children}
-        </>
-    `
-}
+//         <div class="col">${ values.count }</div>
 
-let Child = () => {
-    let {values, update, reset} = useContext(FormContext)
-    console.log('---state?', values)
-    return html`
-    <button onClick=${(e) => update({count:values.count+1})}>${values.count}</button>
-    <button onClick=${(e) => reset()}>RESET</button>
-    `
-}
+//         <div class="col">
+//         <button type="button"
+//             class="btn btn-secondary"
+//             onClick=${(e) => update({count:values.count + increment})}>
+//         (+) ${increment}
+//         </button>
+//         </div>
 
-let FormCard = () => {
-    return html`
-    <div>
-        <${Form} values=${{count:100}}>
-        Form 1
-        <${Child} />
-        </>
-        <br/>
-        <${Form} values=${{count:0}}>
-        Form 2
-        <${Child} />
-        </>
+//         <div class="col">
+//         <button type="button"
+//             class="btn btn-primary"
+//             onClick=${(e) => reset()}>RESET</button>
+//         </div>
+//     </div>
+//     `
+// }
 
-
-    </div>
-    `
-}
+// let FormCard = () => {
+//     return html`
+//     <div class="card">
+//     <div class="card-header">Form and FormContext</div>
+//     <div class="card-body">
+//         <${Form}
+//             values=${{count:100}}
+//         >
+//         <${Child} title="Form 1" increment=${100} />
+//         </>
+//         <br/>
+//         <${Form}
+//             values=${{count:0}}
+//         >
+//         <${Child} title="Form 2"/>
+//         </>
+//     </div>
+//     <div class="card-body h6 small">
+//         to track values of a form (assumed as object),
+//         Form accepts values={}, calc(values) attributes;
+//         FormContext provides values, update and reset
+//         for child component to update a key in values
+//     </div>
+//     </div>
+//     `
+// }
 
 
 render(html`
@@ -67,7 +66,8 @@ render(html`
     <div class="col"><${TextSearchCard} /></div>
     <div class="col"><${TooltipCard} /></div>
     <div class="col"><${OptionsCard} /></div>
+    <div class="col"><${FormCard} /></div>
 </div>
-<${FormCard} />
+
 </div>
 `, document.getElementById('root'))
