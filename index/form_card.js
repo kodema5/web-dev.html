@@ -2,21 +2,41 @@
 import { html, useContext} from '../js/web.js'
 import { Form, FormContext, } from '../js/cmp.js'
 
-let Child = ({title, fieldName, increment=1}) => {
-    let {values, update, reset} = useContext(FormContext)
+let Child = ({label, name, increment=1}) => {
+    let {values, update, } = useContext(FormContext)
+
     return html`
     <div class="row">
-        <div class="col">${title}</div>
+        <div class="col">${label}</div>
 
-        <div class="col">${ values[fieldName] }</div>
+        <div class="col">${ values[name] }</div>
 
         <div class="col">
         <button type="button"
             class="btn btn-secondary"
-            onClick=${(e) => update({[fieldName]:values[fieldName] + increment})}>
+            onClick=${(e) => update({[name]:values[name] + increment})}>
         (+) ${increment}
         </button>
         </div>
+    </div>
+    `
+}
+
+let TextBox = ({label, name, placeholder}) => {
+    let {values, update, } = useContext(FormContext)
+
+return html`
+    <div class="row">
+        <div class="col">${label}</div>
+
+        <div class="col">
+        <input class="form-control"
+            value=${values[name]}
+            placeholder=${placeholder}
+            onInput=${(e) => update({[name]:e.target.value})}>
+        </button>
+        </div>
+        <div class="col"></div>
     </div>
     `
 }
@@ -28,10 +48,12 @@ let Buttons = () => {
         <div class="col">
         <button type="button"
             class="btn btn-primary m-1"
-            onClick=${(e) => alert(JSON.stringify(values))}>show</button>
+            onClick=${(e) => alert(JSON.stringify(values))}
+            >show values</button>
         <button type="button"
             class="btn btn-primary m-1"
-            onClick=${(e) => reset()}>reset</button>
+            onClick=${(e) => reset()}
+            >reset</button>
 
         </div>
     </div>
@@ -40,22 +62,23 @@ let Buttons = () => {
 
 export let FormCard = () => {
     return html`
-    <div class="card">
+    <div class="card m-1 h-100">
     <div class="card-header">Form and FormContext</div>
     <div class="card-body">
         <${Form}
-            values=${{count1:100, count2:10}}
+            values=${{count1:100, count2:10, text:''}}
         >
-        <${Child} title="Count 1" increment=${100} fieldName="count1"/>
-        <${Child} title="Count 2" increment=${10} fieldName="count2"/>
+        <${Child} label="Count 1" increment=${100} name="count1"/>
+        <${Child} label="Count 2" increment=${10} name="count2"/>
+        <${TextBox} label="Text" name="text" placeholder="enter text"/>
         <${Buttons} />
         </>
     </div>
-    <div class="card-body h6 small">
-        to track values of a form (assumed as object),
+    <div class="card-footer h6 small fst-italic">
+        to track form's field values,
         Form accepts values={}, calc(values) attributes;
         FormContext provides values, update and reset
-        for child component to update a key in values
+        for child components
     </div>
     </div>
     `

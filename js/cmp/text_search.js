@@ -61,7 +61,7 @@ export let TextSearch = ({
                     'padding': '5px',
                     'position': 'absolute',
                     'white-space': 'normal',
-                    'width': '96.25%',
+                    'width': '92.5%',
                     'z-index': 100,
                 }, searchStyle_))
                 .filter( ([_,v]) => v)

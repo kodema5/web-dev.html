@@ -3,7 +3,7 @@ import { Tooltip, } from '../js/cmp.js'
 import { Info, } from './info.js'
 
 export let TooltipCard = () => html`
-<div class="card">
+<div class="card m-1 h-100">
     <div class="card-header">Tooltip</div>
     <div class="card-body">
         <${Tooltip}
@@ -13,9 +13,11 @@ export let TooltipCard = () => html`
         <i class="bi bi-info-circle"></i>
         </> hover here
     </div>
-    <div class="card-body h6 small">
-        it wraps bootstrap.Tooltip to accept title function that returns preact's components.
-        tooltip will be kept when hovered.
+    <div class="card-footer h6 small fst-italic">
+        <p>it wraps bootstrap.Tooltip to accept title function
+        to be rendered in inner-tooltip element.</p>
+
+        <p>tooltip will be kept when hovered.</p>
     </div>
 </div>
 `

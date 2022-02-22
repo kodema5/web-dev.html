@@ -1,6 +1,12 @@
+// curl -L https://unpkg.com/preact@10.6.6/dist/preact.module.js > preact.js
+// curl -L https://unpkg.com/preact@10.6.6/hooks/dist/hooks.module.js > preact.hooks.js
+// curl -L https://unpkg.com/preact@10.6.6/compat/dist/compat.module.js > preact.compat.js
+// fix refrences
+
 import { h, render } from './preact.js'
-import { useState, useReducer, useMemo, useCallback, useRef, useContext, useEffect, useLayoutEffect, useErrorBoundary } from './preact.hooks.js'
-import { createContext } from './preact.js'
+import { useState, useReducer, useMemo, useCallback, useRef, useContext, useEffect, useLayoutEffect, useErrorBoundary, } from './preact.hooks.js'
+import { createContext, createRef, } from './preact.js'
+import { forwardRef, } from './preact.compat.js'
 import htm from "./htm.js"
 const html = htm.bind(h)
 
@@ -340,7 +346,7 @@ const exec = ps.exec.bind(ps)
 window.Web = {
     html, render,
     useState, useReducer, useMemo, useCallback, useRef, useContext, useEffect, useLayoutEffect, useErrorBoundary,
-    createContext,
+    createContext, createRef, forwardRef,
     ajax, ajaxFn,
     setStorage, getStorage, removeStorage, clearStorage, saveStorage, loadStorage,
     PubSub, publish, subscribe, unsubscribe, exec,
@@ -356,7 +362,7 @@ window.Web = {
 export {
     html, render,
     useState, useReducer, useMemo, useCallback, useRef, useContext, useEffect, useLayoutEffect, useErrorBoundary,
-    createContext,
+    createContext, createRef, forwardRef,
     ajax, ajaxFn,
     setStorage, getStorage, removeStorage, clearStorage, saveStorage, loadStorage,
     PubSub, publish, subscribe, unsubscribe, exec,

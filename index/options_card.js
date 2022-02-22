@@ -5,11 +5,18 @@ export let OptionsCard = () => {
     let id = getId()
 
     return html`
-    <div class="card">
+    <div class="card m-1 h-100">
         <div class="card-header">Options</div>
         <div class="card-body">
         <${Options}
-            options=${[ {a:'Foo'}, {a:'Bar'}, {a:'Baz'}, {a:'Bat'} ]}
+            ...${(() => {
+                let options = [ {a:'Foo'}, {a:'Bar'}, {a:'Baz'}, {a:'Bat'} ]
+                let values = options[0]
+                return {options, values}
+
+            })()}
+
+
 
             onInput=${(a) => {
                 let t = a.length===0
@@ -22,10 +29,12 @@ export let OptionsCard = () => {
         />
         <div id=${id}>Select the above</div>
         </div>
-        <div class="card-body h6 small">
-            a simple/example of a multi-select component,
+        <div class="card-footer h6 small fst-italic">
+            an example for a multi-select,
             onInput is a callback for selection-change
         </div>
     </div>
     `
 }
+
+// options=${[ {a:'Foo'}, {a:'Bar'}, {a:'Baz'}, {a:'Bat'} ]}

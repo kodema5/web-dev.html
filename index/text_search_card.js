@@ -3,7 +3,7 @@ import { TextSearch, } from '../js/cmp.js'
 import { Info, } from './info.js'
 
 export let TextSearchCard = () => html`
-<div class="card">
+<div class="card m-1 h-100">
     <div class="card-header">TextSearch</div>
     <div class="card-body">
         <${TextSearch}
@@ -30,20 +30,22 @@ export let TextSearchCard = () => html`
             e.update(h)
             setTimeout(() => {
                 e.update(html`${t}, now is ${a.toLocaleString()}`)
-            }, 2000)
+            }, 1000)
         }}
 
         onBlur=${(e) => { e.hide() }}
 
         />
     </div>
-    <div class="card-body h6 small">
-        it consists of a text-field and a "searchEl" div below it.
+    <div class="card-footer h6 small fst-italic">
+        <p>it consists of a text-field and a "searchEl" div below it.
         it iterates "on"-functions and add to its event param:
         searchEl, update (the searchEl div),
         text/setText,
         value/setValue,
-        reset, show/hide
+        reset, show/hide.</p>
+
+        <p>it can be used for customized select, ajax-based search, etc</p>
     </div>
 </div>
 `

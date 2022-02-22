@@ -28,7 +28,7 @@ export let Options = ({
     values:val_ = [],
     getOption = (a) => a,
     onInput = () => {},
-    cls = 'overflow-auto h-50'
+    cls = 'overflow-auto'
 }) => {
     let [values, setValues] = useState(arrayFrom(val_))
 
@@ -40,6 +40,7 @@ export let Options = ({
 
     return html`<div class=${cls}>
         ${options.map(a => html`<${Option}
+
             selected=${values.indexOf(a)>=0}
             value=${a}
 

@@ -1,4 +1,4 @@
-import { html, useRef, render, isFunction} from '../web.js'
+import { html, useRef, render, isFunction } from '../web.js'
 
 export let Tooltip = ({
     title: title_,
