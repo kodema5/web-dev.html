@@ -1,7 +1,7 @@
 // curl -L https://unpkg.com/preact@10.6.6/dist/preact.module.js > preact.js
 // curl -L https://unpkg.com/preact@10.6.6/hooks/dist/hooks.module.js > preact.hooks.js
 // curl -L https://unpkg.com/preact@10.6.6/compat/dist/compat.module.js > preact.compat.js
-// fix refrences
+// then fix references
 
 import { h, render } from './preact.js'
 import { useState, useReducer, useMemo, useCallback, useRef, useContext, useEffect, useLayoutEffect, useErrorBoundary, } from './preact.hooks.js'

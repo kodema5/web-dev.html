@@ -1,4 +1,5 @@
-import { html, render, useRef, createRef, forwardRef, getId, useLayoutEffect, isEmpty, isFunction, isString, } from '../web.js'
+import { html, render, useRef, useContext, createRef, forwardRef, getId, useLayoutEffect, isEmpty, isFunction, isString, } from '../web.js'
+import { Form, FormContext, } from './form.js'
 
 let Fn = (f) => isFunction(f) ? f : (() => f)
 
@@ -6,6 +7,10 @@ let Button = ({
     label,
     class:cls="btn btn-primary",
     isClose = false,
+    onClick:onClick_,
+    values,
+    update,
+    reset,
     ...attr
 }) => html`
     <button
@@ -13,6 +18,9 @@ let Button = ({
         class=${cls}
         ...${attr}
         ...${isClose && ({"data-bs-dismiss":"modal"}) }
+        onClick=${() => {
+            onClick_({values, update, reset})
+        }}
     >${label}</button>`
 
 
@@ -20,6 +28,7 @@ let View = ({
     id = getId('modal'),
     title = location.host,
     content,
+    values={},
     buttons = [],
 }) => {
     let modalRef = useRef(null)
@@ -44,6 +53,7 @@ let View = ({
     >
     <div class="modal-dialog">
     <div class="modal-content">
+        <${Form} values=${values}>
         ${title && html`<div class="modal-header">
             <h5 class="modal-title">${title}</h5>
             <button
@@ -53,14 +63,21 @@ let View = ({
                 aria-label="Close"></button>
         </div>`}
 
-        <div class="modal-body">${Fn(content)()}</div>
+        <div class="modal-body"><${() => {
+            let { values, update } = useContext(FormContext)
+            return Fn(content)({ values, update})
+        }} /></div>
 
-        ${ !isEmpty(buttons) && html`
-            <div class="modal-footer">
-                ${buttons.map(a => html`<${Button} ...${a} />`)}
-            </div>
-        `}
-
+        ${ !isEmpty(buttons) && html`<${() => {
+            // ctx = { values, update, reset}
+            //
+            let ctx = useContext(FormContext)
+            return html`
+                <div class="modal-footer">
+                ${buttons.map(a => html`<${Button} ...${ctx} ...${a} />`)}
+                </div>`
+        }} />`}
+        </>
     </div>
     </div>
     </div>`
@@ -73,6 +90,7 @@ let show = ({
     title = location.host,
     content,
     buttons,
+    values,
 }, modalId='modal') => {
     let el = document.getElementById(modalId)
     if (!el) {
@@ -85,6 +103,7 @@ let show = ({
             title=${title}
             content=${content}
             buttons=${buttons}
+            values=${values}
         />
     `, el)
 }
@@ -126,27 +145,32 @@ let confirm = (msg, onClose=()=>{}) => {
     })
 }
 
-let promptView = forwardRef(({label, value}, ref) => html`
-    <div class="mb-3">
-    <label class="form-label">${label}</label>
-    <input ref=${ref} type="text" class="form-control" value=${value} />
-    </div>
-    `)
-
-
 let prompt = (msg, value, onClose=()=>{}) => {
-    let ref = createRef()
+
     let { title, content } = isString(msg)
-        ? { content:html`<${promptView} ref=${ref} value=${value} label=${msg} />` }
+        ? { content: ({values, update}) => {
+            return html`
+                <div class="mb-3">
+                <label class="form-label">${msg}</label>
+                <input
+                    type="text"
+                    class="form-control"
+                    value=${values.prompt}
+                    onInput=${(e) => update({prompt:e.target.value}) }
+                />
+                </div>
+            ` }
+        }
         : msg
 
     show({
         title,
         content,
+        values: { prompt: value || '' },
         buttons: [{
             label:'OK',
             isClose:true,
-            onClick:() => onClose(ref.current.value)
+            onClick:({values, update, reset}) => onClose(values.prompt)
         }, {
             label: 'Cancel',
             isClose:true,
