@@ -10,6 +10,7 @@ import { forwardRef, } from './preact.compat.js'
 import htm from "./htm.js"
 const html = htm.bind(h)
 
+// utilities
 
 const isEmpty = (a) => (a==null) || (a==='') || (Array.isArray(a) && a.length===0)
 
@@ -19,7 +20,8 @@ const isBoolean = (a) => (typeof a === 'boolean')
 
 const isFunction = (a) => (typeof a === 'function')
 
-const isObject = (a) => (a !== null && typeof a ==='object')
+const isObject = (a) => (a !== null && a instanceof Object && a.constructor === Object)
+
 
 const cleanObject = (obj) => {
     let v = {}
@@ -77,6 +79,71 @@ const parseJSON = (s, defaultValue) => {
         return defaultValue
     }
 }
+
+var arrayFrom = (val) => (val === undefined || val===null) ? []
+	: Array.isArray(val) ? val
+	: [val]
+
+// stored functions
+const Fn = (a) => isFunction(a) ? a : (() => a)
+
+const functions = {}
+
+const fset = (name, fn) => {
+    if (fn===null || fn===undefined) {
+        delete functions[name]
+    } else {
+        functions[name] = fn
+    }
+}
+
+const fpipe = async (names, arg0) => {
+    var fs = arrayFrom(names)
+        .map((n) => functions[n])
+        .filter(Boolean)
+
+    var x = arg0
+    while(fs.length > 0) {
+        let fn = fs.shift()
+        x = await Fn(fn)(x)
+    }
+    return x
+}
+
+const fcall = async(name, arg) => {
+	if (Array.isArray(name)) return fcallarray(name, arg)
+    if (isObject(name)) return fcallobject(name)
+
+    let fn = functions[name]
+    if (!fn) return undefined
+    return await Fn(fn)(arg)
+}
+
+
+const fcallarray = async (names, arg) => {
+	let ps = arrayFrom(names)
+        .map(n => functions[n])
+        .filter(Boolean)
+        .map(async (fn) => await Fn(fn)(arg))
+
+    return await Promise.all(ps)
+}
+
+
+const fcallobject = async (names) => {
+	let ns = Object.entries(names)
+        .map( ([n, arg]) => {
+            let fn = functions[n]
+            return !fn ? null : ([n, Fn(fn)(arg)])
+        })
+        .filter(Boolean)
+
+    let ps = ns.map( ([n,p]) => p)
+    let values = await Promise.all(ps)
+    let entries = ns.map( (a, i) => [a[0], values[i]])
+    return Object.fromEntries(entries)
+}
+
 
 
 // ID
@@ -352,6 +419,7 @@ window.Web = {
     PubSub, publish, subscribe, unsubscribe, exec,
     isEmpty, isString, isBoolean, isObject, isFunction,
     cleanObject, setObject, getObject, deleteObject,
+    arrayFrom, Fn, functions, fset, fcall, fpipe,
     getId,
 }
 
@@ -366,8 +434,9 @@ export {
     ajax, ajaxFn,
     setStorage, getStorage, removeStorage, clearStorage, saveStorage, loadStorage,
     PubSub, publish, subscribe, unsubscribe, exec,
-    isEmpty, isString, isBoolean, isObject,  isFunction,
+    isEmpty, isString, isBoolean, isObject, isFunction,
     cleanObject, setObject, getObject, deleteObject,
+    arrayFrom, Fn, functions, fset, fcall, fpipe,
     getId,
 }
 
