@@ -1,5 +1,6 @@
 export * from './form.js'
 export * from './modal.js'
 export * from './options.js'
+export * from './pagination.js'
 export * from './text_search.js'
 export * from './tooltip.js'
