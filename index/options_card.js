@@ -16,8 +16,6 @@ export let OptionsCard = () => {
 
             })()}
 
-
-
             onInput=${(a) => {
                 let t = a.length===0
                     ? 'Select the above'

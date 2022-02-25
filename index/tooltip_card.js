@@ -1,5 +1,5 @@
-import { html, } from '../js/web.js'
-import { Tooltip, } from '../js/cmp.js'
+import { html, render, useRef, } from '../js/web.js'
+import { Tooltip, Options, } from '../js/cmp.js'
 import { Info, } from './info.js'
 
 export let TooltipCard = () => html`
@@ -8,7 +8,26 @@ export let TooltipCard = () => html`
     <div class="card-body">
         <${Tooltip}
             data-bs-placement="bottom"
-            title=${() => html`<${Info} label="a component for tooltip" />`}
+            title=${() => {
+
+                return html`
+                <${Info} label="select below" />
+                <div>
+                <${Options}
+                ...${(() => {
+                    let options = [ {a:'Foo'}, {a:'Bar'}, {a:'Baz'}, {a:'Bat'} ]
+                    let values = options[0]
+                    return {options, values}
+
+                })()}
+
+                getOption=${(a) => a.a}
+
+                />
+                </div>
+
+                `
+            }}
         >
         <i class="bi bi-info-circle"></i>
         </> hover here
