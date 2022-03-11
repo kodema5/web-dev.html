@@ -27,6 +27,7 @@ let Button = ({
 let View = ({
     id = getId('modal'),
     title = location.host,
+    size = '', // modal-sm modal-lg modal-xl
     content,
     values={},
     buttons = [],
@@ -51,7 +52,7 @@ let View = ({
         tabindex="-1"
         aria-hidden="true"
     >
-    <div class="modal-dialog">
+    <div class=${`modal-dialog ${size}`}>
     <div class="modal-content">
         <${Form} values=${values}>
         ${title && html`<div class="modal-header">
@@ -88,6 +89,7 @@ let View = ({
 let show = ({
     id:id_ = getId('modal'),
     title = location.host,
+    size = '',
     content,
     buttons,
     values,
@@ -101,6 +103,7 @@ let show = ({
         <${View}
             id=${id_}
             title=${title}
+            size=${size}
             content=${content}
             buttons=${buttons}
             values=${values}

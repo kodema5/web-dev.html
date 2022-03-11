@@ -1,6 +1,7 @@
 // various components for index.html
 import { html, render, useRef, createContext, useState, createRef, useReducer, useContext, forwardRef, getId, useLayoutEffect, isEmpty, isFunction, isString, } from '../js/web.js'
 import { FormCard } from './form_card.js'
+import { GridCard } from './grid_card.js'
 import { ModalCard } from './modal_card.js'
 import { OptionsCard } from './options_card.js'
 import { PaginationCard } from './pagination_card.js'
@@ -17,6 +18,7 @@ render(html`
     <div class="col"><${TooltipCard} /></div>
     <div class="col"><${ModalCard} /></div>
     <div class="col"><${PaginationCard} /></div>
+    <div class="col"><${GridCard} /></div>
 </div>
 </div>
 `, document.getElementById('root'))
