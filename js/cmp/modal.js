@@ -40,6 +40,7 @@ let View = ({
         let m = new bootstrap.Modal(el)
         el.addEventListener('hidden.bs.modal', () => {
             m.dispose()
+            el.parentElement.remove()
         })
         m.show()
     }, [])

@@ -1,14 +1,14 @@
-import { html, useRef, useLayoutEffect, } from '../web.js'
+import { html, useRef, useLayoutEffect, getId, } from '../web.js'
 import '../jquery.js'
 import '../datatables.js'
 
 export let Grid = ({
+    id = getId('grid'),
     on = {},
     once = {},
     ...dataTableOptions
 }) => {
     let ref = useRef(null)
-    console.log('options?', dataTableOptions)
 
     useLayoutEffect(() => {
         let table = new DataTable(ref.current, dataTableOptions)
@@ -22,5 +22,5 @@ export let Grid = ({
         })
     },[])
 
-    return html`<table ref=${ref} class="table table-striped" style="width:100%"></table>`
+    return html`<table id=${id} ref=${ref} class="table table-striped" style="width:100%"></table>`
 }

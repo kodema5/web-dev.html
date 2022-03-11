@@ -1,3 +1,4 @@
+export * from './chart.js'
 export * from './form.js'
 export * from './grid.js'
 export * from './modal.js'
