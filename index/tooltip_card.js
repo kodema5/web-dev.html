@@ -11,8 +11,8 @@ export let TooltipCard = () => html`
             title=${() => {
 
                 return html`
+                <div class="container bg-body text-start text-dark" >
                 <${Info} label="select below" />
-                <div>
                 <${Options}
                 ...${(() => {
                     let options = [ {a:'Foo'}, {a:'Bar'}, {a:'Baz'}, {a:'Bat'} ]
@@ -36,7 +36,8 @@ export let TooltipCard = () => html`
         <p>it wraps bootstrap.Tooltip to accept title function
         to be rendered in inner-tooltip element.</p>
 
-        <p>tooltip will be kept when hovered.</p>
+        <p>tooltip will be kept when hovered.
+            $tooltip-max-width=200px</p>
     </div>
 </div>
 `

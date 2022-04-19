@@ -1,4 +1,6 @@
+export * from './chart.js'
 export * from './form.js'
+export * from './grid.js'
 export * from './modal.js'
 export * from './options.js'
 export * from './pagination.js'

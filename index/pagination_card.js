@@ -17,7 +17,7 @@ export let PaginationCard = () => {
                 <${Pagination}
                 page=${page}
                 setPage=${setPage}
-                totalCount=${101}
+                totalCount=${111}
                 class="pagination justify-content-center"
                 />
                 </div>

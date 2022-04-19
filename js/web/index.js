@@ -2,6 +2,7 @@
 // curl -L https://unpkg.com/preact@10.6.6/hooks/dist/hooks.module.js > preact.hooks.js
 // curl -L https://unpkg.com/preact@10.6.6/compat/dist/compat.module.js > preact.compat.js
 // then fix references
+// curl -L https://unpkg.com/htm@3.1.0/dist/htm.module.js > htm.js
 
 import { h, render } from './preact.js'
 import { useState, useReducer, useMemo, useCallback, useRef, useContext, useEffect, useLayoutEffect, useErrorBoundary, } from './preact.hooks.js'
